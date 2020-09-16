@@ -36,6 +36,12 @@ describe 'Blackjack Score' do
     score = blackjack_score(hand)
     expect(score).must_equal 17
 
+    #test multiple face cards:
+
+    hand = ['King', 'Jack']
+    score = blackjack_score(hand)
+    expect(score).must_equal 20
+
   end
 
   it 'calculates aces as 11 where it does not go over 21' do
@@ -54,6 +60,14 @@ describe 'Blackjack Score' do
     expect(score).must_equal 12
 
   end
+
+  it 'returns 21 for two face cards and an Ace' do
+
+    hand = ['King', 'Jack', 'Ace']
+    score = blackjack_score(hand)
+    expect(score).must_equal 21
+  end
+
 
   it 'raises an ArgumentError for invalid cards' do
 
@@ -77,6 +91,11 @@ describe 'Blackjack Score' do
   it 'raises an ArgumentError for scores over 21' do
 
     hand = ["Jack", "King", 9]
+    expect {
+      blackjack_score(hand)
+    }.must_raise ArgumentError
+
+    hand = ['Queen', 'King', 'Jack']
     expect {
       blackjack_score(hand)
     }.must_raise ArgumentError
