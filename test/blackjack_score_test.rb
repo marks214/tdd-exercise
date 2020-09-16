@@ -17,27 +17,69 @@ describe 'Blackjack Score' do
     # Act
     score = blackjack_score(hand)
 
-    # Assert <-  You do this part!
+    # Assert - the answer must be equal to 7
+    expect(score).must_equal 7
 
   end
 
   it 'facecards have values calculated correctly' do
 
+    hand = ['Jack', 3]
+    score = blackjack_score(hand)
+    expect(score).must_equal 13
+
+    hand = ['Queen', 6]
+    score = blackjack_score(hand)
+    expect(score).must_equal 16
+
+    hand = ['King', 7]
+    score = blackjack_score(hand)
+    expect(score).must_equal 17
+
   end
 
   it 'calculates aces as 11 where it does not go over 21' do
+
+    # test for ace = 11 points
+    hand = ['Ace', 3, 4]
+    score = blackjack_score(hand)
+    expect(score).must_equal 18
 
   end
 
   it 'calculates aces as 1, if an 11 would cause the score to go over 21' do
 
+    hand = ['Ace', 5, 6]
+    score = blackjack_score(hand)
+    expect(score).must_equal 12
+
   end
 
   it 'raises an ArgumentError for invalid cards' do
 
+    hand = [4]
+    expect {
+      blackjack_score(hand)
+    }.must_raise ArgumentError
+
+    hand = [2, 3, 4, 5, 6, 7]
+    expect {
+      blackjack_score(hand)
+    }.must_raise ArgumentError
+
+    hand = ["go fish", 5, 8]
+    expect {
+      blackjack_score(hand)
+    }.must_raise ArgumentError
+
   end
 
   it 'raises an ArgumentError for scores over 21' do
+
+    hand = ["Jack", "King", 9]
+    expect {
+      blackjack_score(hand)
+    }.must_raise ArgumentError
 
   end
 end
