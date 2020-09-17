@@ -6,10 +6,8 @@ VALID_CARDS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace']
 def blackjack_score(hand)
   count_hand(hand)
   validate_cards_in_hand(hand)
-  score = 0
-  score += calculate_face_card_score(hand)
-  score += calculate_numerical_card_score(hand)
-  score += determine_ace_card_value(hand)
+
+  score = calculate_points(hand)
 
   if score > 21
     raise ArgumentError, 'score exceeds 21, your hand is a bust!'
@@ -37,16 +35,12 @@ def validate_cards_in_hand(hand)
 end
 
 def calculate_face_card_score(hand)
-
-  k = 0
-  q = 0
-  j = 0
-
-  k = 10 if hand.include?('King')
-  q = 10 if hand.include?('Queen')
-  j = 10 if hand.include?('Jack')
-
-  points = k + q + j
+  points = 0
+  hand.each do |card_value|
+    if card_value == 'King' || card_value == 'Queen' || card_value == 'Jack'
+      points += 10
+    end
+  end
 
   return points
 
@@ -63,11 +57,11 @@ def calculate_numerical_card_score(hand)
 
 end
 
-def determine_ace_card_value(hand)
+def calculate_points(hand)
   points = calculate_face_card_score(hand) + calculate_numerical_card_score(hand)
-  ace_value = 0
 
   hand.each do |card|
+    ace_value = 0
     if (card == 'Ace') && (points <= 10)
       ace_value = 11
     elsif (card == 'Ace') && (points > 10)
@@ -76,7 +70,7 @@ def determine_ace_card_value(hand)
     points += ace_value
   end
 
-  return ace_value
+  return points
 
 end
 

@@ -36,9 +36,9 @@ describe 'Blackjack Score' do
     score = blackjack_score(hand)
     expect(score).must_equal 17
 
-    #test multiple face cards:
+    #test multiple face cards/duplicates:
 
-    hand = ['King', 'Jack']
+    hand = ['King', 'King']
     score = blackjack_score(hand)
     expect(score).must_equal 20
 
@@ -64,6 +64,12 @@ describe 'Blackjack Score' do
   it 'returns 21 for two face cards and an Ace' do
 
     hand = ['King', 'Jack', 'Ace']
+    score = blackjack_score(hand)
+    expect(score).must_equal 21
+  end
+
+  it 'returns 21 for multiple ace cards with face and number cards' do
+    hand = ['Ace', 'Ace', 'King', 9]
     score = blackjack_score(hand)
     expect(score).must_equal 21
   end
